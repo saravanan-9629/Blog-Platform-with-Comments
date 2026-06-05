@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog Platform</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+}
+
+header{
+    background:#333;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.container{
+    width:80%;
+    margin:20px auto;
+}
+
+.blog-post{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:8px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.2);
+}
+
+.blog-post h2{
+    margin-bottom:10px;
+}
+
+.blog-post p{
+    margin-bottom:10px;
+    line-height:1.6;
+}
+
+.comment-section{
+    margin-top:15px;
+}
+
+.comment-section h3{
+    margin-bottom:10px;
+}
+
+.comment{
+    background:#eee;
+    padding:10px;
+    border-radius:5px;
+    margin-bottom:8px;
+}
+
+textarea{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+}
+
+button{
+    margin-top:10px;
+    padding:10px 20px;
+    background:#333;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#555;
+}
+
+footer{
+    background:#333;
+    color:white;
+    text-align:center;
+    padding:15px;
+    margin-top:20px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Blog Platform</h1>
+    <p>Create, Share and Discuss Ideas</p>
+</header>
+
+<div class="container">
+
+    <div class="blog-post">
+        <h2>My First Blog Post</h2>
+        <p>
+            Welcome to my blog platform. This is a sample blog post where users
+            can read articles and share their thoughts through comments.
+        </p>
+
+        <div class="comment-section">
+            <h3>Comments</h3>
+
+            <div class="comment">
+                Great post! Looking forward to more content.
+            </div>
+
+            <div class="comment">
+                Very informative and easy to understand.
+            </div>
+
+            <textarea rows="4" placeholder="Write a comment..."></textarea>
+            <button>Post Comment</button>
+        </div>
+    </div>
+
+    <div class="blog-post">
+        <h2>Web Development Tips</h2>
+        <p>
+            Learn HTML, CSS, JavaScript, and backend technologies to build
+            complete full-stack applications.
+        </p>
+
+        <div class="comment-section">
+            <h3>Comments</h3>
+
+            <div class="comment">
+                Thanks for sharing these tips!
+            </div>
+
+            <textarea rows="4" placeholder="Write a comment..."></textarea>
+            <button>Post Comment</button>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 Blog Platform. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
