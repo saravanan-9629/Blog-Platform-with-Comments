@@ -1,0 +1,213 @@
+1. User Authentication
+User Registration
+POST /api/auth/register
+
+Request:
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123"
+}
+User Login
+POST /api/auth/login
+
+Response:
+
+{
+  "token": "jwt_token"
+}
+Protected Routes
+
+Middleware:
+
+const jwt = require("jsonwebtoken");
+
+module.exports = (req, res, next) => {
+  const token = req.header("Authorization");
+
+  if (!token) {
+    return res.status(401).json({
+      message: "Access denied"
+    });
+  }
+
+  try {
+    const verified = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
+
+    req.user = verified;
+    next();
+  } catch {
+    res.status(400).json({
+      message: "Invalid token"
+    });
+  }
+};
+2. Database Design
+User Schema
+{
+  _id,
+  name,
+  email,
+  password,
+  createdAt
+}
+Post Schema
+{
+  _id,
+  title,
+  content,
+  author,
+  createdAt,
+  updatedAt
+}
+Comment Schema
+{
+  _id,
+  postId,
+  userId,
+  text,
+  createdAt
+}
+3. Blog Post Management
+Create Post
+POST /api/posts
+{
+  "title": "My First Blog",
+  "content": "Blog content..."
+}
+Get All Posts
+GET /api/posts
+Get Single Post
+GET /api/posts/:id
+Update Post
+PUT /api/posts/:id
+Delete Post
+DELETE /api/posts/:id
+Example Post Controller
+const Post = require("../models/Post");
+
+exports.createPost = async (req, res) => {
+  try {
+    const post = await Post.create({
+      title: req.body.title,
+      content: req.body.content,
+      author: req.user.id
+    });
+
+    res.status(201).json(post);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+4. Comment System
+Add Comment
+POST /api/comments
+{
+  "postId": "123",
+  "text": "Great article!"
+}
+Get Comments by Post
+GET /api/comments/post/:postId
+Delete Comment
+DELETE /api/comments/:id
+Comment Model
+const mongoose = require("mongoose");
+
+const commentSchema = new mongoose.Schema({
+  postId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Post"
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
+  text: {
+    type: String,
+    required: true
+  }
+}, {
+  timestamps: true
+});
+
+module.exports = mongoose.model(
+  "Comment",
+  commentSchema
+);
+Frontend Pages
+Public Pages
+Home
+Blog List
+Blog Details
+Login
+Register
+Protected Pages
+Create Post
+Edit Post
+User Dashboard
+Sample React Component
+import { useState } from "react";
+import axios from "axios";
+
+function CreatePost() {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  const submitPost = async () => {
+    await axios.post(
+      "/api/posts",
+      { title, content },
+      {
+        headers: {
+          Authorization: localStorage.getItem("token")
+        }
+      }
+    );
+  };
+
+  return (
+    <div>
+      <input
+        value={title}
+        onChange={(e) =>
+          setTitle(e.target.value)
+        }
+      />
+
+      <textarea
+        value={content}
+        onChange={(e) =>
+          setContent(e.target.value)
+        }
+      />
+
+      <button onClick={submitPost}>
+        Publish
+      </button>
+    </div>
+  );
+}
+Folder Structure
+blog-platform/
+│
+├── client/
+│   ├── src/
+│   │   ├── pages/
+│   │   ├── components/
+│   │   ├── services/
+│   │   └── App.js
+│
+├── server/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── config/
+│   └── server.js
+│
+├── .env
+└── package.json
